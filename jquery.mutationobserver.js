@@ -1,6 +1,10 @@
 /**
- * Adds a jQuery.mutationObserver(listenerFn) to be notified of DOM manipulation performed through jQuery's DOM
- * mutation functions.
+ *  jQuery mutationObserver 1.0.0
+ *	https://github.com/timbonicus/jquery-mutationobserver
+ *
+ *	Dual licensed under the MIT and GPL licenses.
+ *	http://en.wikipedia.org/wiki/MIT_License
+ *	http://en.wikipedia.org/wiki/GNU_General_Public_License
  */
 (function($) {
     var jQueryMutationFns = ['after', 'append', 'before', 'empty', 'html', 'prepend', 'remove']

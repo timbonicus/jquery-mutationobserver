@@ -13,9 +13,9 @@
     $.each(jQueryMutationFns, function(i, fn) {
         var originalFn = $.fn[fn]
         $.fn[fn] = function() {
-            originalFn.apply(this, arguments)
+            var result = originalFn.apply(this, arguments)
             fire(this)
-            return this
+            return result
         }
     })
 

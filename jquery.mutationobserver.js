@@ -1,5 +1,5 @@
 /**
- *  jQuery mutationObserver 1.0.0
+ *  jQuery mutationObserver 1.0.1
  *	https://github.com/timbonicus/jquery-mutationobserver
  *
  *	Dual licensed under the MIT and GPL licenses.

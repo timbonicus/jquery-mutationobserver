@@ -1,5 +1,5 @@
 /**
- *  jQuery mutationObserver 1.0.1
+ *	jQuery mutationObserver 1.0.1
  *	https://github.com/timbonicus/jquery-mutationobserver
  *
  *	Dual licensed under the MIT and GPL licenses.
@@ -9,12 +9,15 @@
 (function($) {
     var jQueryMutationFns = ['after', 'append', 'before', 'empty', 'html', 'prepend', 'remove']
     var mutationObservers = []
+    var __mutationTimeout
 
     $.each(jQueryMutationFns, function(i, fn) {
         var originalFn = $.fn[fn]
         $.fn[fn] = function() {
+            var me = this
             var result = originalFn.apply(this, arguments)
-            fire(this)
+            clearTimeout(__mutationTimeout)
+            __mutationTimeout = setTimeout(function() { fire(me) }, 50)
             return result
         }
     })

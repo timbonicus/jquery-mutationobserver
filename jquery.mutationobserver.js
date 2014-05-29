@@ -1,5 +1,5 @@
 /**
- *	jQuery mutationObserver 1.0.2
+ *	jQuery mutationObserver 1.0.3
  *	https://github.com/timbonicus/jquery-mutationobserver
  *
  *	Dual licensed under the MIT and GPL licenses.
@@ -9,6 +9,7 @@
 (function($) {
     var jQueryMutationFns = ['after', 'append', 'before', 'empty', 'html', 'prepend', 'remove']
     var mutationObservers = []
+    var __mutatedElements = []
     var __mutationTimeout
 
     $.each(jQueryMutationFns, function(i, fn) {
@@ -16,15 +17,21 @@
         $.fn[fn] = function() {
             var me = this
             var result = originalFn.apply(this, arguments)
+            if (__mutatedElements.indexOf(me) < 0)
+                __mutatedElements.push(me)
             clearTimeout(__mutationTimeout)
-            __mutationTimeout = setTimeout(function() { fire(me) }, 50)
+            __mutationTimeout = setTimeout(function() {
+                fire()
+                __mutatedElements = []
+            }, 50)
             return result
         }
     })
 
-    function fire($element) {
+    function fire() {
         $.each(mutationObservers, function(i, observer) {
-            if ($element.closest(observer.el).length)
+            var hasMutatedChildren = __mutatedElements.some(function(el) { return $(el).closest(observer.el).length })
+            if (hasMutatedChildren)
                 observer.listener()
         })
     }

@@ -1,5 +1,5 @@
 /**
- *	jQuery mutationObserver 1.0.3
+ *	jQuery mutationObserver 1.0.4
  *	https://github.com/timbonicus/jquery-mutationobserver
  *
  *	Dual licensed under the MIT and GPL licenses.
@@ -16,9 +16,10 @@
         var originalFn = $.fn[fn]
         $.fn[fn] = function() {
             var me = this
+            var mutatedElement = (fn == 'remove') ? me.parent() : me
             var result = originalFn.apply(this, arguments)
-            if (__mutatedElements.indexOf(me) < 0)
-                __mutatedElements.push(me)
+            if (__mutatedElements.indexOf(mutatedElement) < 0)
+                __mutatedElements.push(mutatedElement)
             clearTimeout(__mutationTimeout)
             __mutationTimeout = setTimeout(function() {
                 fire()
